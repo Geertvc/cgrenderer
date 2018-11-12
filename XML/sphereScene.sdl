@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="0 5 5" direction="0 -1 -1" up="0 -1 1" fovy="60" name="cam0" />
+      <Camera position="0 5 -5" direction="0 -1 1" up="0 -2 -1" fovy="60" name="cam1" />
+      <Camera position="0 0 5" direction="0 0 -1" up="0 -1 0" fovy="60" name="cam2" />
+      <Camera position="0 5 0" direction="0 -1 0" up="0 0 1" fovy="60" name="cam3" />
+      <Camera position="15 15 15" direction="-1 -1 -1" up="0 1 0" fovy="45" name="cam4"/>
+      <Camera position="10 4 10" direction="-1 0 -1" up="0 1 0" fovy="45" name="cam5"/>
+      <Camera position="-100 100 200" direction="0.5 -0.3 -1" up="0 1 0" fovy="45" name="androidCam"/>  
+   </Cameras>   
+   
+   <Lights>
+      <PointLight position="0 -10 -10" intensity="1" color="1 1 1" name="light0" />
+      <PointLight position="0 15 15" intensity="1" color="1 1 1" name="light1" />
+      <PointLight position="0 0 15" intensity="1" color="1 0 0" name="light2" />
+      <PointLight position="20 20 0" intensity="1" color="1 1 1" name="light3" />
+      <PointLight position="0 50 200" intensity="1" color="1 1 1" name="androidLight" />
+   </Lights>
+   
+   <Geometry>
+	<Sphere radius="1" name="sphere" />
+	<!--<Cube size="1" name="cube" />-->
+	<!--<IndexedTriangleSet coordinates="-10 0 -10, 10 0 -10, 10 0 10, -10 0 10" normals="1 0 0" textureCoordinates="0 0, 0 1, 1 0, 1 1" coordinateIndices="0, 2, 3, 0, 1, 2" normalIndices="0, 0, 0, 0, 0, 0" textureCoordinateIndices="2, 1, 0, 2, 3, 1" name="plane" />-->
+   </Geometry>
+   
+   <Materials>
+   	  <DiffuseMaterial color="0 0.6 0" name="green" />
+   	  <DiffuseMaterial color="0.543 0.27 0.074" name="brown" />
+      <DiffuseMaterial color="0.75 0.75 0.57647" name="dif0" />
+      <DiffuseMaterial color="0.99215 0.81176 0.5" name="dif1" />
+      <PhongMaterial color="1 1 1" shininess="200" name="phong1" />
+      <LinearCombinedMaterial  material1="dif1" weight1="0.9" material2="phong1" weight2="0.1" name="samengesteld1" />
+      <DiffuseMaterial color="0.7019608 0.93333334 0.22745098" name="androidGreen" />
+      <PhongMaterial color="1 1 1" shininess="200" name="androidPhong" />
+      <LinearCombinedMaterial  material1="androidGreen" weight1="0.9" material2="androidPhong" weight2="0.1" name="androidMat" />
+   </Materials>
+   
+   <Scene camera="androidCam" lights="androidLight" background="0.3 0.3 0.3">
+      <Shape geometry="sphere" material="androidMat" />
+      <!--<Shape geometry="plane" material="dif0" />-->
+      <!--<Shape geometry="cube" material="brown" />-->
+   </Scene>
+</Sdl>

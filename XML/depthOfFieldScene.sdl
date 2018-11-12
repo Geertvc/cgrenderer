@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      	<Camera position="0 0 15" direction="0 0 -1" up="-1 0 0" fovy="90" name="cam3" /> 
+   </Cameras>   
+   
+   <Lights>
+      	<PointLight position="0 15 15" intensity="1" color="1 1 1" name="light0" />
+   </Lights>
+   
+   <Geometry>
+   		<!--<Plane size="1" name="plane" />-->
+		<!--<IndexedTriangleSet coordinates="-1 -1 0, 1 -1 0, 1 1 0, -1 1 0" normals="0 0 1" textureCoordinates="0 0, 0 1, 1 0, 1 1" coordinateIndices="0, 2, 3, 0, 1, 2" normalIndices="0, 0, 0, 0, 0, 0" textureCoordinateIndices="2, 1, 0, 2, 3, 1" name="plane" />-->
+		<!--<Cube size="1" name="cube1" />-->
+		<Sphere radius="1" name="sphere1" />
+		<Sphere radius="1" name="sphere2" />
+		<Sphere radius="1" name="sphere3" />
+		<!--<Teapot size="1" name="teapot1" />-->
+		<!--<Torus innerRadius="1" outerRadius="3" name="teapot1" />-->
+		
+		<!--<IndexedTriangleSet coordinates="-0.6 0.7 0.1, 0.7 -0.5 0.1, 0.7 0.7 0.1" normals="0 0 1" textureCoordinates="0 0, 0 1, 1 0" coordinateIndices="0, 1, 2" normalIndices="0, 0, 0" textureCoordinateIndices="2, 1, 0" name="triangle2" />-->
+		<!--<IndexedTriangleSet coordinates="-0.8 0.8 0, -0.8 -0.8 0, 0.8 0.8 0" normals="0 0 1" textureCoordinates="0 0, 0 1, 1 0" coordinateIndices="0, 1, 2" normalIndices="0, 0, 0" textureCoordinateIndices="2, 1, 0" name="triangle1" />-->
+		
+   </Geometry>
+   
+   <Textures>
+   		<Texture src="globeTextureTooBig.jpg" name="worldMap" />
+   		<Texture src="WorldMapMillerProjectionWarmth.jpg" name="worldMapWarmth" />
+   </Textures>
+   
+   <Materials>   
+      	<DiffuseMaterial color="1 0 0" name="red" />
+      	<DiffuseMaterial color="1 1 0" name="yellow" />
+      	<DiffuseMaterial color="0 1 0" name="green" />
+   </Materials>
+   
+   <Scene camera="cam3" lights="light0" background="0.3 0.3 0.3">
+   <!-- -->
+   
+   		<Translate vector="2 0 5">
+      		<Shape geometry="sphere1" material="yellow" />
+      	</Translate>
+      	<Translate vector="-3 0 -5">
+      		<Shape geometry="sphere2" material="red" />
+      	</Translate>
+      	<Translate vector="0 0 0">
+      		<Shape geometry="sphere3" material="green" />
+      	</Translate>
+   		
+   </Scene>
+</Sdl>

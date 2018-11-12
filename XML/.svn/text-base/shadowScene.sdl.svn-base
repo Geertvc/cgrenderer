@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="0 5 5" direction="0 -1 -1" up="0 -1 1" fovy="60" name="cam0" />
+      <Camera position="0 5 -5" direction="0 -1 1" up="0 -2 -1" fovy="60" name="cam1" />
+      <Camera position="0 0 5" direction="0 0 -1" up="0 -1 0" fovy="60" name="cam2" />
+      <Camera position="20 20 0" direction="-1 -1 0" up="0 0 1" fovy="20" name="cam3" />
+      <Camera position="15 15 15" direction="-1 -1 -1" up="0 1 0" fovy="20" name="cam4"/>
+      <Camera position="0 15 0" direction="0 -1 0" up="0 0 1" fovy="45" name="perpCam"/>  
+   </Cameras>   
+   
+   <Lights>
+      <PointLight position="0 -10 -10" intensity="1" color="1 1 1" name="light0" />
+      <PointLight position="15 15 15" intensity="1" color="1 1 1" name="light4" />
+      <PointLight position="0 0 15" intensity="1" color="1 0 0" name="light2" />
+      <PointLight position="10 10 0" intensity="1" color="1 1 1" name="light3" />
+      <PointLight position="0 5 0" intensity="1" color="1 1 1" name="perpLight" />
+   </Lights>
+   
+   <Geometry>
+	<Sphere radius="1" name="sphere" />
+	<Sphere radius="1" name="sphere2" />
+	<Sphere radius="1" name="sphere3" />
+	<Sphere radius="1" name="sphere4" />
+	<Sphere radius="1" name="sphere5" />
+	<IndexedTriangleSet coordinates="-10 0 10, 10 0 10, -10 0 -10, 10 0 -10" normals="0 1 0" textureCoordinates="0 0, 0 1, 1 0, 1 1" coordinateIndices="0, 1, 3, 0, 3, 2" normalIndices="0, 0, 0, 0, 0, 0" textureCoordinateIndices="0, 2, 1, 0, 1, 3" name="plane" />
+   </Geometry>
+   
+   <Materials>
+      <DiffuseMaterial color="1 0.75 1" name="difPlane" />
+      <DiffuseMaterial color="0.99215 0.81176 0.5" name="dif1" />
+      <DiffuseMaterial color="0 1 1" name="lightBlue" />
+      <PhongMaterial color="1 1 1" shininess="200" name="phong1" />
+      <LinearCombinedMaterial  material1="dif1" weight1="0.9" material2="phong1" weight2="0.1" name="samengesteld1" />
+   </Materials>
+   
+   <Scene camera="cam4" lights="perpLight" background="0.3 0.3 0.3">
+   		<Translate vector="0 1 0">
+   			<Shape geometry="sphere" material="lightBlue" />
+      	</Translate>
+      	<Translate vector="3 1 0">
+   			<Shape geometry="sphere2" material="lightBlue" />
+      	</Translate>
+      	<Translate vector="-3 1 0">
+   			<Shape geometry="sphere3" material="lightBlue" />
+      	</Translate>
+      	<Translate vector="0 1 3">
+   			<Shape geometry="sphere4" material="lightBlue" />
+      	</Translate>
+      	<Translate vector="0 1 -3">
+   			<Shape geometry="sphere5" material="lightBlue" />
+      	</Translate>
+       	<Shape geometry="plane" material="difPlane" />
+   </Scene>
+</Sdl>

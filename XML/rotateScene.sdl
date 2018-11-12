@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="0 5 5" direction="0 -1 -1" up="0 -1 1" fovy="60" name="cam0" />
+      <Camera position="0 5 -5" direction="0 -1 1" up="0 -2 -1" fovy="45" name="cam1" />
+      <Camera position="15 15 15" direction="-1 -1 -1" up="0 1 0" fovy="45" name="cam4"/>
+      <Camera position="0 15 15" direction="0 -1 -1" up="0 1 0" fovy="45" name="cam2"/> 
+   </Cameras>   
+   
+   <Lights>
+      <PointLight position="0 200 0" intensity="1" color="1 1 1" name="light0" />
+      <PointLight position="0 15 15" intensity="1" color="1 1 1" name="light1" />
+   </Lights>
+   
+   <Geometry>
+	<Cube size="1" name="cube1" />
+	<Cube size="1" name="cube2" />
+	<Cube size="1" name="cube3" />
+	<Cube size="1" name="cube4" />
+	<Cube size="1" name="cube5" />
+	<Cube size="1" name="cube6" />
+   </Geometry>
+   
+   <Materials>
+      <DiffuseMaterial color="0 0 1" name="blue" />
+      <PhongMaterial color="1 1 1" shininess="100" name="phong1" />
+      <LinearCombinedMaterial  material1="blue" weight1="0.7" material2="phong1" weight2="0.3" name="samengesteld1" />
+   </Materials>
+   
+   <Scene camera="cam2" lights="light1" background="0.3 0.3 0.3">
+      	<Translate vector="0 0 0">
+      		<Rotate axis="0 0 1" angle="30">
+      			<Shape geometry="cube1" material="blue" />
+      		</Rotate>
+      	</Translate>
+      	
+      	<Translate vector="3 0 0">
+      		<Rotate axis="0 0 1" angle="0">
+      			<Shape geometry="cube2" material="blue" />
+      		</Rotate>
+      	</Translate>
+      	
+      	<Translate vector="-3 0 0">
+      		<Rotate axis="0 0 1" angle="0">
+      			<Shape geometry="cube3" material="blue" />
+      		</Rotate>
+      	</Translate>
+      	
+      	<Translate vector="0 3 0">
+      		<Rotate axis="0 0 1" angle="-30">
+      			<Shape geometry="cube4" material="blue" />
+      		</Rotate>
+      	</Translate>
+      	
+      	<Translate vector="3 3 0">
+      		<Rotate axis="0 0 -1" angle="15">
+      			<Shape geometry="cube5" material="blue" />
+      		</Rotate>
+      	</Translate>
+      	
+      	<Translate vector="-3 3 0">
+      		<Rotate axis="0 0 1" angle="0">
+      			<Shape geometry="cube6" material="blue" />
+      		</Rotate>
+      	</Translate>
+   </Scene>
+</Sdl>

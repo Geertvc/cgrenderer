@@ -1,0 +1,5 @@
+1.	Voeg aan sdl.dtd je element toe op de correcte plaats, 
+zorg ook dat de header van dat element ook je element bevat.
+2.	Voeg aan parserHandler de nodige start en end methode toe.
+3.	Voeg aan parser de nodige start en end code toe.
+4.	Voeg aan sceneBuilder en echoParserHandler je methodes toe.

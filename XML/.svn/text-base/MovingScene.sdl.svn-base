@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="0 0 15" direction="0 0 -1" up="0 1 0" fovy="60" name="cam0" />
+   </Cameras>   
+   
+   <Lights>
+      <PointLight position="0 0 15" intensity="1" color="1 1 1" name="light0" />
+   </Lights>
+   
+   <Geometry>
+	<!--<Sphere radius="1" name="sphere1" />-->
+	<Sphere radius="1" name="movingSphere" />
+   </Geometry>
+   
+    <Textures>
+   		<Texture src="globeTextureTooBig.jpg" name="worldMap" />
+   </Textures>
+   
+   <Materials>
+   	  <DiffuseMaterial color="0 0.6 0" name="green" />
+   	  <DiffuseMaterial color="0.6 0 0" name="red" />
+      <PhongMaterial color="1 1 1" shininess="200" name="phong1" />
+      <LinearCombinedMaterial  material1="green" weight1="0.9" material2="phong1" weight2="0.1" name="samengesteld1" />
+   </Materials>
+   
+   <Scene camera="cam0" lights="light0" background="0.3 0.3 0.3">
+   		<!--<Translate vector="2 0 0">
+      		<Shape geometry="sphere1" material="green" />
+      	</Translate>-->
+     	<Shape geometry="movingSphere" material="red" />
+   </Scene>
+</Sdl>

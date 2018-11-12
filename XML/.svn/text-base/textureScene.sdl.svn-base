@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+   		<Camera position="-5 0 0" direction="1 0 0" up="0 1 0" fovy="45" name="cam0" /> 
+      	<Camera position="0 5 0" direction="0 -1 0" up="1 0 0" fovy="45" name="cam1" />
+      	<Camera position="-2.5 0 4.33" direction="2.5 0 -4.33" up="0 1 0" fovy="45" name="cam2" />
+      	<Camera position="5 5 0" direction="-1 -1 0" up="0 1 0" fovy="45" name="cam3" /> 
+   </Cameras>   
+   
+   <Lights>
+      	<PointLight position="-2.5 0 4.33" intensity="1" color="1 1 1" name="light0" />
+      	<PointLight position="-5 0 0" intensity="1" color="1 1 1" name="light1" />
+      	<PointLight position="15 0 0" intensity="1" color="1 1 1" name="light2" />
+   </Lights>
+   
+   <Geometry>
+		<IndexedTriangleSet coordinates="0 -1 -1, 0 1 -1, 0 1 1, 0 -1 1" normals="1 0 0" textureCoordinates="0 0, 0 1, 1 0, 1 1" coordinateIndices="0, 2, 3, 0, 1, 2" normalIndices="0, 0, 0, 0, 0, 0" textureCoordinateIndices="2, 1, 0, 2, 3, 1" name="plane" />
+		<Sphere radius="1" name="sphere" />
+   </Geometry>
+   
+   <Textures>
+   		<Texture src="globeTextureTooBig.jpg" name="worldMap" />
+   		<Texture src="WorldMapMillerProjectionWarmth.jpg" name="worldMapWarmth" />
+   		<Texture src="fiber.jpg" name="tex" />
+   		<Texture src="EarthCloud.jpg" name="earthCloud" />
+   		<Texture src="Sun.jpg" name="sun" />
+   </Textures>
+   
+   <Materials>
+      	<DiffuseMaterial color="1 0.75 1" name="dif0" />      
+   </Materials>
+   
+   <Scene camera="cam3" lights="light2" background="0.3 0.3 0.3">
+   <!-- -->
+   		<!--<Shape geometry="plane" material="dif0" />-->
+   		<!--<Translate vector="2 4 0">-->
+   		<Rotate axis="0 1 0" angle="135">
+   			<Shape geometry="sphere" texture="worldMapWarmth" />
+   		</Rotate>
+   		<!--</Translate>-->
+   </Scene>
+</Sdl>
