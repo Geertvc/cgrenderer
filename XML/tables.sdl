@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+      <Camera position="0 5 5" direction="0 -1 -1" up="0 -1 1" fovy="60" name="cam0" />
+      <Camera position="0 5 -5" direction="0 -1 1" up="0 -2 -1" fovy="0" name="cam1" />
+      <Camera position="15 15 15" direction="-1 -1 -1" up="0 1 0" fovy="45" name="cam4"/>
+      <Camera position="0 35 35" direction="0 -1 -1" up="0 1 0" fovy="45" name="cam2"/>
+      <Camera position="0 100 0" direction="0 -1 0" up="0 0 1" fovy="45" name="perpcam"/>
+      <Camera position="0 10 100" direction="0 0 -1" up="0 1 0" fovy="45" name="zCam"/>
+      <Camera position="0 25 35" direction="0 -0.6 -1" up="0 1 0" fovy="45" name="cam"/>    
+   </Cameras>   
+   
+   <Lights>
+      <PointLight position="0 200 0" intensity="1" color="1 1 1" name="light0" />
+      <PointLight position="0 5 5" intensity="1" color="1 1 1" name="light1" />
+      <PointLight position="0 50 0" intensity="1" color="1 1 1" name="perpLight" />
+      <PointLight position="0 25 35" intensity="1" color="1 1 1" name="light" />
+   </Lights>
+   
+   <Geometry>
+	<!--<Sphere radius="1" name="sphere1" />-->
+	
+	<!--<Cylinder radius="1.0" height="5.0" capped="true" name="cylinder1" />-->
+	<!--<Cone radius="1.0" height="5.0" capped="false" name="cone1" />-->
+	<IndexedTriangleSet coordinates="-20 0 20, 20 0 20, -20 0 -20, 20 0 -20" normals="0 1 0" textureCoordinates="0 0, 0 1, 1 0, 1 1" coordinateIndices="0, 1, 3, 0, 3, 2" normalIndices="0, 0, 0, 0, 0, 0" textureCoordinateIndices="0, 2, 1, 0, 1, 3" name="ground" />
+	<!--<Torus innerRadius="1" outerRadius="3" name="torus1" />-->
+	<!--<Teapot size="1" name="teapot1" />-->
+	<Table size="1" name="table1" />
+	<Tablecloth size="1" name="cloth1" />
+	<Table size="1" name="table2" />
+	<Tablecloth size="1" name="cloth2" />
+	<Table size="1" name="table3" />
+	<Tablecloth size="1" name="cloth3" />
+	<Table size="1" name="table4" />
+	<Tablecloth size="1" name="cloth4" />
+	<Sphere radius="1" name="android" />
+	<Bunny size="1" name="bunny" />
+	<Triceratops size="1" name="dino" />
+	<Venus size="1" name="venus" />
+   </Geometry>
+   
+    <Textures>
+   		<Texture src="fiber.jpg" name="tex" />
+   		<Texture src="back.jpg" name="worldMap" />
+   </Textures>
+   
+   <Materials>
+      <DiffuseMaterial color="0.6 0 0" name="red" />
+      <DiffuseMaterial color="0 0.6 0" name="green" />
+      <DiffuseMaterial color="0 0 0.6" name="blue" />
+      <DiffuseMaterial color="0 0.6 0.6" name="cyan" />
+      <DiffuseMaterial color="0.6 0.6 0" name="yellow" />
+      <DiffuseMaterial color="1 0.8 0" name="gold" />
+      <DiffuseMaterial color="0.8 0.8 0.5" name="grey" />
+      <DiffuseMaterial color="0.8 0.8 0.8" name="lightGrey" />
+      <DiffuseMaterial color="0.6 0.3 0" name="orange" />
+      <DiffuseMaterial color="0 1 1" name="dunno" />
+      <DiffuseMaterial color="1 0.75 1" name="difPlane" />
+      <DiffuseMaterial color="0.75 0.75 0.5" name="dif0" />
+      <PhongMaterial color="1 1 1" shininess="100" name="phong1" />
+      <LinearCombinedMaterial  material1="blue" weight1="0.7" material2="phong1" weight2="0.3" name="samengesteld1" />
+      
+      <DiffuseMaterial color="0.7019608 0.93333334 0.22745098" name="androidGreen" />
+      <PhongMaterial color="1 1 1" shininess="100" name="Pandroid" />
+      <LinearCombinedMaterial  material1="androidGreen" weight1="0.9" material2="Pandroid" weight2="0.1" name="androidPhong" />
+      
+      <PhongMaterial color="1 1 1" shininess="40" name="P40" />
+      <PhongMaterial color="1 1 1" shininess="50" name="P50" />
+      <PhongMaterial color="1 1 1" shininess="500" name="P75" />
+      <PhongMaterial color="1 1 1" shininess="100" name="P100" />
+      <PhongMaterial color="1 0 0" shininess="100" name="P100Red" />
+      
+      <LinearCombinedMaterial  material1="dif0" weight1="0.9" material2="P40" weight2="0.1" name="dif0Phong" />
+      <LinearCombinedMaterial  material1="gold" weight1="0.9" material2="P50" weight2="0.1" name="goldPhong" />
+      <LinearCombinedMaterial  material1="grey" weight1="0.9" material2="P100" weight2="0.1" name="greyPhong" />
+      
+   </Materials>
+   
+   <Scene camera="cam" lights="perpLight" background="0.3 0.3 0.3">
+   		<Translate vector="0 0 10">
+      		<Shape geometry="table1" material="blue" />
+      		<Shape geometry="cloth1" material="blue" />
+      		<Scale scale="0.05 0.05 0.05">
+      			<Translate vector="0 7.1 9">
+      				<Shape geometry="android" material="androidPhong" />
+      			</Translate>
+      		</Scale>
+      	</Translate>
+      	
+      	<Translate vector="10 0 0">
+      		<Shape geometry="table2" material="green" />
+      		<Shape geometry="cloth2" material="green" />
+      		<Translate vector="0 7.1 0">
+      				<Shape geometry="bunny" material="dif0Phong" />
+      		</Translate>
+      	</Translate>
+      	
+      	<Translate vector="-10 0 0">
+      		<Shape geometry="table3" material="yellow" />
+      		<Shape geometry="cloth3" material="yellow" />
+      		<Rotate axis="0 1 0" angle="-30">
+      			<Scale scale="0.7 0.7 0.7">
+      				<Translate vector="-3 9.8 3.2">
+      					<Shape geometry="dino" material="goldPhong" />
+      				</Translate>
+      			</Scale>
+      		</Rotate>
+      	</Translate>
+      	
+      	<Translate vector="0 0 -10">
+      		<Shape geometry="table4" material="orange" />
+      		<Shape geometry="cloth4" material="orange" />
+      		<Rotate axis="0 1 0" angle="0">
+      			<Scale scale="0.6 0.6 0.6">
+      				<Translate vector="0 11 -3">
+      					<Shape geometry="venus" material="greyPhong" />
+      				</Translate>
+      			</Scale>
+      		</Rotate>
+      	</Translate>
+   		<Shape geometry="ground" material="lightGrey" />
+   
+   
+   		<!--<Translate vector="5 1 0">
+      		<Shape geometry="sphere1" material="dif0" />
+      	</Translate>-->
+      	
+      	<!--<Translate vector="0 1 -5">
+      		<Scale scale="2 2 1">
+      			<Shape geometry="sphere2" material="red" />
+      		</Scale>
+      	</Translate>-->
+      	
+      	<!--<Translate vector="0 1 5">
+      		<Shape geometry="cylinder1" material="green" />
+      		<Translate vector="0 2 0">
+      			<Shape geometry="cone1" material="dunno" />
+      		</Translate>
+      	</Translate>-->
+      	
+      	<!--<Rotate axis="0 1 0" angle="30">
+      		<Shape geometry="teapot1" material="blue" />
+      	</Rotate>-->
+      	
+      	<!--<Translate vector="-5 1 0">
+      		<Shape geometry="torus1" material="yellow" />
+      	</Translate>-->
+      	
+      	<!--<Shape geometry="plane" material="difPlane" />-->
+   </Scene>
+</Sdl>

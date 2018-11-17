@@ -2,6 +2,7 @@ package sceneModel.sceneGraph;
 
 import sceneModel.Surface;
 import abstractModel.Matrix4f;
+import abstractModel.Vector3f;
 
 /**
  * A SceneGraphElement containing one object of the scene. 
@@ -75,5 +76,82 @@ public class LeafNode extends SceneGraphElement{
 	public SceneGraphElement getRoot(){
 		return root;
 	}
+	
+//	@Override
+//	public Matrix4f getTotalTransformMatrix() {
+//		Matrix4f totalTransformMatrix = new Matrix4f();
+//		if(root != null){
+//			Matrix4f rootMatrix = root.getTotalTransformMatrix();
+//			totalTransformMatrix.multiplyRight(super.getLocalTransformMatrix(), rootMatrix);
+//		}
+//		Matrix4f newLocal = new Matrix4f();
+//		newLocal.multiplyRight(totalTransformMatrix, rotationMatrix);
+//		return newLocal;
+//	}
+	
+//	private Matrix4f rotationMatrix = new Matrix4f(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
 
+//	public void setRotationMatrix(float angle){
+//    	Vector3f axis = new Vector3f(0,1,0);
+//    	System.err.println("axis: " + axis);
+//    	System.err.println("angle: " + angle);
+//    	//Make orthonormal base to make rotationMatrix with.
+//    	Vector3f w = new Vector3f(axis);
+//    	w.normalize();
+//    	Vector3f t = getNonCollinearVector(w);
+//    	Vector3f u = new Vector3f();
+//    	u.cross(t, w);
+//    	u.normalize();
+//    	Vector3f v = new Vector3f();
+//    	v.cross(w, u);
+//    	v.normalize();
+//    	System.err.println("v: " + v);
+//    	Matrix4f uvw = new Matrix4f(u.x, v.x, w.x, 0, 
+//    								u.y, v.y, w.y, 0, 
+//    								u.z, v.z, w.z, 0, 
+//    								0, 0, 0, 1);
+//    	System.err.println("uvw: \n" + uvw);
+//    	double angleInRadians = Math.toRadians(angle);
+//    	System.err.println("angleInRadians: " + angleInRadians);
+//    	Matrix4f rotateAngleAroundZ = new Matrix4f(	(float) Math.cos(angleInRadians), (float)-Math.sin(angleInRadians), 0, 0,
+//    												(float) Math.sin(angleInRadians), (float) Math.cos(angleInRadians), 0, 0,
+//    												0, 0, 1, 0,
+//    												0, 0, 0, 1);
+//    	Matrix4f uvwTranspose = uvw.transpose();
+//    	//Make rotationMatrix
+//    	Matrix4f rotationMatrix = new Matrix4f();
+//    	rotationMatrix.multiplyRight(uvw, rotateAngleAroundZ);
+//    	rotationMatrix = rotationMatrix.multiplyRight(uvwTranspose);
+//    	this.rotationMatrix = rotationMatrix;
+//    }
+	
+	/**
+	 * Returns a vector that is not collinear with the given vector.
+	 * 
+	 * @param w	The given vector.
+	 * @return	Vector3f
+	 * 		Non collinear vector.
+	 */
+	protected Vector3f getNonCollinearVector(Vector3f w) {
+		Vector3f t = new Vector3f(w);
+		float tempX = Math.abs(w.x);
+		float tempY = Math.abs(w.y);
+		float tempZ = Math.abs(w.z);
+    	if(tempY < tempX){
+    		if(tempZ < tempY){
+    			t.set(w.x, w.y, 1);
+    		} else{
+    			t.set(w.x, 1, w.z);
+    		}
+    	} else if(tempZ < tempX){
+    		t.set(w.x, w.y, 1);
+    	} else{
+    		t.set(1, w.y, w.z);
+    	}
+    	return t;
+	}
+
+	
+	
+	
 }

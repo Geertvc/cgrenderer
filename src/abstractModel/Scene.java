@@ -9,12 +9,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import main.Constants;
 import ray_Tracing.Ray;
 import sceneModel.Camera;
 import sceneModel.DiffuseMaterial;
 import sceneModel.DirectionalLight;
+import sceneModel.GlobalMaterial;
 import sceneModel.LinearCombinedMaterial;
 import sceneModel.Material;
 import sceneModel.PhongMaterial;
@@ -47,6 +50,7 @@ public class Scene extends Surface{
 	protected HashMap<String, Material> materials;
 	protected HashMap<String, Texture> textures;
 	protected HashMap<String, String[]> linkedGeometries;
+	
 	
 	protected Color3f background;
 	protected String activeCamera;
@@ -764,9 +768,16 @@ public class Scene extends Surface{
 		return sceneGraph;
 	}
 	
-	public void addMovingSphere(){
-		LeafNode sphere = this.sceneGraph.getLeafNode("movingSphere");
+	public void addMovingSphere1(){
+		LeafNode sphere = this.sceneGraph.getLeafNode("movingSphere1");
 		MovingLeafNode movingSphere = new MovingLeafNode(sphere.getName(), sphere.getMaterialName(), sphere.getLocalTransformMatrix(), sphere.getRoot(), sphere.getSurface(), 1f, new Vector3f(0,1,0));
+		this.sceneGraph.removeLeafNode(sphere.getName());
+		this.sceneGraph.addLeafNode(movingSphere.getName(), movingSphere);
+	}
+	
+	public void addMovingSphere2(){
+		LeafNode sphere = this.sceneGraph.getLeafNode("movingSphere2");
+		MovingLeafNode movingSphere = new MovingLeafNode(sphere.getName(), sphere.getMaterialName(), sphere.getLocalTransformMatrix(), sphere.getRoot(), sphere.getSurface(), 2f, new Vector3f(1,0,0));
 		this.sceneGraph.removeLeafNode(sphere.getName());
 		this.sceneGraph.addLeafNode(movingSphere.getName(), movingSphere);
 	}
@@ -791,6 +802,19 @@ public class Scene extends Surface{
 			}
 		}
 		return intersectionRecord;
+	}
+	
+	public void addGlobalMaterials(List<GlobalMaterial> materials){
+		GlobalMaterial material;
+		for (int i = 0; i < materials.size(); i++) {
+			material = materials.get(i);
+			this.materials.put(material.getName(), material);
+		}
+	}
+
+	public void addGlobalMaterial(String name, Color3f ambientColor, Color3f diffuseColor, Color3f spectralColor,
+			float phongExponent, float reflectionCoeff) {
+		this.materials.put(name, new GlobalMaterial(name, ambientColor, diffuseColor, spectralColor, phongExponent, reflectionCoeff));
 	}
 	
 }

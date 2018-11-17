@@ -211,7 +211,7 @@ public class RayTracer extends Thread {
 						colorToAdd = materialShadowShading(material, normal,
 								intersectionPoint, pointLight);
 					} else{
-						colorToAdd = material.shade(normal, intersectionPoint, pointLight, scene.getActiveCamera().position);
+						colorToAdd = material.shade(normal, intersectionPoint, pointLight, scene.getActiveCamera().position, null, scene, 0);
 					}
 					totalColor.add(colorToAdd);
 				}
@@ -221,45 +221,7 @@ public class RayTracer extends Thread {
 					((totalColor.y > 1) ? 1 : totalColor.y),
 					((totalColor.z > 1) ? 1 : totalColor.z));
 		} else{
-			if(!Constants.ENVIRONMENTMAP){
-				pixelColor = new Color3f(scene.getBackground());
-			} else{
-				Vector3f dir = ray.direction;
-				float x = dir.x;
-				float y = dir.y;
-				float z = dir.z;
-				if(Math.abs(x) > Math.abs(y) && Math.abs(x) > Math.abs(z)){
-					if(x>0){
-						//Right face
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPRIGHT);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.x)/(2*dir.x), (dir.z+dir.x)/(2*dir.x)));
-					} else{
-						//Left face
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPLEFT);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.x)/(2*dir.x), (dir.z+dir.x)/(2*dir.x)));
-					}
-				} else if(Math.abs(y) > Math.abs(x) && Math.abs(y) > Math.abs(z)){
-					if(y>0){
-						//Back face
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPBACK);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.x+dir.y)/(2*dir.y), (dir.z+dir.y)/(2*dir.y)));
-					} else{
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPFRONT);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.x+dir.y)/(2*dir.y), (dir.z+dir.y)/(2*dir.y)));
-					}
-				} else if(Math.abs(z) > Math.abs(y) && Math.abs(z) > Math.abs(x)){
-					if(z>0){
-						//Top face
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPTOP);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.z)/(2*dir.z), (dir.x+dir.z)/(2*dir.z)));
-					} else{
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPBOTTOM);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.z)/(2*dir.z), (dir.x+dir.z)/(2*dir.z)));
-					}
-				} else{
-					pixelColor = new Color3f(scene.getBackground());
-				}
-			}
+			pixelColor = calculateBackGroundColor(scene, ray);
 			
 		}
 		return pixelColor;
@@ -280,98 +242,121 @@ public class RayTracer extends Thread {
 			Color3f totalColor = new Color3f();
 			String textureName = scene.getLeafNode(intersectionRecord.geometryName).getTextureName();
 			if(textureName != null){
-				LeafNode leaf = scene.getLeafNode(intersectionRecord.geometryName); 
-				Matrix4f transformMatrix = leaf.getTotalTransformMatrix();
-				Point3f intersectionPoint = new Point3f(transformMatrix.locationMult(intersectionRecord.intersectionPoint));
-				Texture texture = scene.getTextures().get(textureName);
-				String[] activeLights = scene.getActiveLights();
-				for (int i = 0; i < activeLights.length; i++) {
-					PointLight pointLight = scene.getPointLights().get(activeLights[i]);
-					Color3f colorToAdd;
-					if(Constants.SHADOW){
-						colorToAdd = textureShadowShading(intersectionRecord,
-								intersectionPoint, texture, pointLight);
-					} else{
-						colorToAdd = texture.shade(intersectionRecord.a, intersectionRecord.b, intersectionRecord.c, intersectionRecord.intersectionPoint, pointLight);
-					}
-					totalColor.add(colorToAdd);
-				}
+				textureShading(intersectionRecord, totalColor, textureName);
 			} else{
-				//Use normal shading on the geometry
-				String materialName = scene.getLeafNode(intersectionRecord.geometryName).getMaterialName();
-				Material material = scene.getMaterials().get(materialName);
-				//Find normal
-				Vector3f normal = Triangle.getInterpolatedNormalizedNormal(intersectionRecord.a, intersectionRecord.b, intersectionRecord.c, new Point3f(intersectionRecord.intersectionPoint));
-				LeafNode leaf = scene.getLeafNode(intersectionRecord.geometryName);
-				
-				//Transform the normal 
-				Matrix4f transformMatrix = leaf.getTotalTransformMatrix();
-				Matrix4f invertedTransformMatrix = new Matrix4f();
-				invertedTransformMatrix.invert(transformMatrix);
-				Matrix4f invertedTransposeTransformMatrix = invertedTransformMatrix.transpose();
-				normal = new Vector3f(invertedTransposeTransformMatrix.directionMult(normal));
-				
-				normal.scale(1/normal.length());
-				//Get transformed intersectionPoint
-				Point3f intersectionPoint = new Point3f(transformMatrix.locationMult(intersectionRecord.intersectionPoint));
-				String[] activeLights = scene.getActiveLights();
-				for (int i = 0; i < activeLights.length; i++) {
-					PointLight pointLight = scene.getPointLights().get(activeLights[i]);
-					Color3f colorToAdd;
-					if(Constants.SHADOW){
-						colorToAdd = materialShadowShading(material, normal,
-								intersectionPoint, pointLight);
-					} else{
-						colorToAdd = material.shade(normal, intersectionPoint, pointLight, scene.getActiveCamera().position);
-					}
-					totalColor.add(colorToAdd);
-				}
+				materialShading(intersectionRecord, totalColor);
 			}
 			pixelColor = new Color3f(
 					((totalColor.x > 1) ? 1 : totalColor.x),
 					((totalColor.y > 1) ? 1 : totalColor.y),
 					((totalColor.z > 1) ? 1 : totalColor.z));
 		} else{
-			if(!Constants.ENVIRONMENTMAP){
-				pixelColor = new Color3f(scene.getBackground());
-			} else{
-				Vector3f dir = ray.direction;
-				float x = dir.x;
-				float y = dir.y;
-				float z = dir.z;
-				if(Math.abs(x) > Math.abs(y) && Math.abs(x) > Math.abs(z)){
-					if(x>0){
-						//Right face
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPRIGHT);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.x)/(2*dir.x), (dir.z+dir.x)/(2*dir.x)));
-					} else{
-						//Left face
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPLEFT);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.x)/(2*dir.x), (dir.z+dir.x)/(2*dir.x)));
-					}
-				} else if(Math.abs(y) > Math.abs(x) && Math.abs(y) > Math.abs(z)){
-					if(y>0){
-						//Back face
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPBACK);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.x+dir.y)/(2*dir.y), (dir.z+dir.y)/(2*dir.y)));
-					} else{
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPFRONT);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.x+dir.y)/(2*dir.y), (dir.z+dir.y)/(2*dir.y)));
-					}
-				} else if(Math.abs(z) > Math.abs(y) && Math.abs(z) > Math.abs(x)){
-					if(z>0){
-						//Top face
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPTOP);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.z)/(2*dir.z), (dir.x+dir.z)/(2*dir.z)));
-					} else{
-						Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPBOTTOM);
-						pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.z)/(2*dir.z), (dir.x+dir.z)/(2*dir.z)));
-					}
-				} else{
-					pixelColor = new Color3f(scene.getBackground());
-				}
-			}
+			pixelColor = calculateBackGroundColor(scene, ray);
 			
+		}
+		return pixelColor;
+	}
+
+	public void materialShading(IntersectionRecord intersectionRecord,
+			Color3f totalColor) {
+		System.out.println("called");
+		//Use normal shading on the geometry
+		String materialName = scene.getLeafNode(intersectionRecord.geometryName).getMaterialName();
+		Material material = scene.getMaterials().get(materialName);
+		//Find normal
+		Vector3f normal = Triangle.getInterpolatedNormalizedNormal(intersectionRecord.a, intersectionRecord.b, intersectionRecord.c, new Point3f(intersectionRecord.intersectionPoint));
+		LeafNode leaf = scene.getLeafNode(intersectionRecord.geometryName);
+		
+		//Transform the normal 
+		Matrix4f transformMatrix = leaf.getTotalTransformMatrix();
+		Matrix4f invertedTransformMatrix = new Matrix4f();
+		invertedTransformMatrix.invert(transformMatrix);
+		Matrix4f invertedTransposeTransformMatrix = invertedTransformMatrix.transpose();
+		normal = new Vector3f(invertedTransposeTransformMatrix.directionMult(normal));
+		
+		normal.scale(1/normal.length());
+		//Get transformed intersectionPoint
+		Point3f intersectionPoint = new Point3f(transformMatrix.locationMult(intersectionRecord.intersectionPoint));
+		String[] activeLights = scene.getActiveLights();
+		for (int i = 0; i < activeLights.length; i++) {
+			PointLight pointLight = scene.getPointLights().get(activeLights[i]);
+			Color3f colorToAdd;
+			if(Constants.SHADOW){
+				colorToAdd = materialShadowShading(material, normal,
+						intersectionPoint, pointLight);
+			} else{
+				colorToAdd = material.shade(normal, intersectionPoint, pointLight, scene.getActiveCamera().position, null, scene, 0);
+			}
+			totalColor.add(colorToAdd);
+		}
+	}
+
+	protected void textureShading(IntersectionRecord intersectionRecord,
+			Color3f totalColor, String textureName) {
+		LeafNode leaf = scene.getLeafNode(intersectionRecord.geometryName); 
+		Matrix4f transformMatrix = leaf.getTotalTransformMatrix();
+		Point3f intersectionPoint = new Point3f(transformMatrix.locationMult(intersectionRecord.intersectionPoint));
+		Texture texture = scene.getTextures().get(textureName);
+		String[] activeLights = scene.getActiveLights();
+		for (int i = 0; i < activeLights.length; i++) {
+			PointLight pointLight = scene.getPointLights().get(activeLights[i]);
+			Color3f colorToAdd;
+			if(Constants.SHADOW){
+				colorToAdd = textureShadowShading(intersectionRecord,
+						intersectionPoint, texture, pointLight);
+			} else{
+				colorToAdd = texture.shade(intersectionRecord.a, intersectionRecord.b, intersectionRecord.c, intersectionRecord.intersectionPoint, pointLight);
+			}
+			totalColor.add(colorToAdd);
+		}
+	}
+
+	public static Color3f calculateBackGroundColor(Scene scene, Ray ray) {
+		Color3f pixelColor;
+		if(!Constants.ENVIRONMENTMAP){
+			pixelColor = new Color3f(scene.getBackground());
+		} else{
+			pixelColor = calculateEnvironmentMapColor(scene, ray);
+		}
+		return pixelColor;
+	}
+
+	protected static Color3f calculateEnvironmentMapColor(Scene scene, Ray ray) {
+		Color3f pixelColor;
+		Vector3f dir = ray.direction;
+		float x = dir.x;
+		float y = dir.y;
+		float z = dir.z;
+		if(Math.abs(x) > Math.abs(y) && Math.abs(x) > Math.abs(z)){
+			if(x>0){
+				//Right face
+				Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPRIGHT);
+				pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.x)/(2*dir.x), (dir.z+dir.x)/(2*dir.x)));
+			} else{
+				//Left face
+				Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPLEFT);
+				pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.x)/(2*dir.x), (dir.z+dir.x)/(2*dir.x)));
+			}
+		} else if(Math.abs(y) > Math.abs(x) && Math.abs(y) > Math.abs(z)){
+			if(y>0){
+				//Back face
+				Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPBACK);
+				pixelColor = new Color3f(texture.getColor3fAt((dir.x+dir.y)/(2*dir.y), (dir.z+dir.y)/(2*dir.y)));
+			} else{
+				Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPFRONT);
+				pixelColor = new Color3f(texture.getColor3fAt((dir.x+dir.y)/(2*dir.y), (dir.z+dir.y)/(2*dir.y)));
+			}
+		} else if(Math.abs(z) > Math.abs(y) && Math.abs(z) > Math.abs(x)){
+			if(z>0){
+				//Top face
+				Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPTOP);
+				pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.z)/(2*dir.z), (dir.x+dir.z)/(2*dir.z)));
+			} else{
+				Texture texture = scene.getTextures().get(Constants.ENVIRONMENTMAPBOTTOM);
+				pixelColor = new Color3f(texture.getColor3fAt((dir.y+dir.z)/(2*dir.z), (dir.x+dir.z)/(2*dir.z)));
+			}
+		} else{
+			pixelColor = new Color3f(scene.getBackground());
 		}
 		return pixelColor;
 	}
@@ -743,7 +728,7 @@ public class RayTracer extends Thread {
 	 * @return	Ray
 	 * 		A softShadowRay.
 	 */
-	protected Ray getSoftShadowRay(Point3f intersectionPoint,
+	protected static Ray getSoftShadowRay(Point3f intersectionPoint,
 			final float lightSize, PointLight softPointLight,
 			Vector3f shadowDirection) {
 		Point3f startingPoint = new Point3f(softPointLight.position);
@@ -770,10 +755,10 @@ public class RayTracer extends Thread {
 	protected Color3f getMaterialShadeColor(Material material, Vector3f normal,
 			Point3f intersectionPoint, PointLight pointLight, Ray shadowRay) {
 		Color3f shadeColor;
-		if(scene.hitClosest(shadowRay, 0.01f, Float.MAX_VALUE) != null){
+		if(scene.hitClosest(shadowRay, 0.1f, Float.MAX_VALUE) != null){
 			shadeColor = new Color3f();
 		} else{
-			shadeColor = material.shade(normal, intersectionPoint, pointLight, scene.getActiveCamera().position);
+			shadeColor = material.shade(normal, intersectionPoint, pointLight, scene.getActiveCamera().position, null, scene, 0);
 		}
 		return shadeColor;
 	}

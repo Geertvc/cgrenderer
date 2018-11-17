@@ -17,6 +17,15 @@ import abstractModel.SceneBuilder;
 /**
  * Main class running the ray tracing application multithreaded.
  * 
+ * TODO ::
+ * 	Spotlights
+ * 	DirectionalLights
+ * 	Reflecties
+ * 	Refracties
+ * 	mtl files inlezen
+ * 	menger fractaal proberen door geometrische aftrekkingen van geometriee 
+ * 
+ * 
  * @author Geert Van Campenhout
  * @version 1.3
  */
@@ -27,7 +36,7 @@ public class MainMultiThreaded {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new MainMultiThreaded(Constants.FILENAME);
+		new MainMultiThreaded(Constants.FILENAME, Constants.SAVE_FILE_NAME);
 	}
 
 	private volatile int currentRow;
@@ -40,8 +49,9 @@ public class MainMultiThreaded {
 	 * Starts the application with the given filename of the XML file to be parsed.
 	 * 
 	 * @param fileName	The name of the file to be parsed.
+	 * @param saveFileName	The name of the file to save the rendered image to.
 	 */
-	public MainMultiThreaded(String fileName) {
+	public MainMultiThreaded(String fileName, String saveFileName) {
 		this.currentRow = 0;
 		this.colors = new Color3f[Constants.NBOFVERTICALPIXELS][Constants.NBOFHORIZONTALPIXELS];
 		df = new DecimalFormat();
@@ -51,7 +61,9 @@ public class MainMultiThreaded {
 		long duration;
 		Scene scene = createScene(fileName);
 		
-//		scene.addMovingSphere();
+//		scene.getLeafNode("sphere").setRotationMatrix(angle);
+//		scene.addMovingSphere1();
+//		scene.addMovingSphere2();
 		
 		//Setting up JFrame and CgPanel
 		imagePanel = initFrameAndImagePanel();
@@ -64,7 +76,8 @@ public class MainMultiThreaded {
 		final long calcStopTime = System.currentTimeMillis();
 		duration = calcStopTime - calcStartTime;
 		System.out.println("Scene visualized in " + duration + " msec");
-		this.imagePanel.saveImage(Constants.SAVE_FILE_NAME);
+		this.imagePanel.saveImage(saveFileName);
+//		this.frame.dispose();
 	}
 
 	/**
@@ -112,13 +125,15 @@ public class MainMultiThreaded {
 	protected RayTracer[] createAndStartAllWorkThreads(Scene scene) {
 		RayTracer[] threads = new RayTracer[Constants.NUMBER_OF_THREADS];
 		for (int thread = 0; thread < Constants.NUMBER_OF_THREADS; thread++) {
-			RayTracer workThread = new RayTracer(this, scene);
+			RayTracer workThread = new GlobalRayTracer(this, scene);
 			System.out.println("Thread " + thread + " aangemaakt.");
 			threads[thread] = workThread;
 			workThread.start();
 		}
 		return threads;
 	}
+	
+//	private JFrame frame;
 
 	/**
 	 * Initializes the JFrame in which the image will be shown.
@@ -130,6 +145,7 @@ public class MainMultiThreaded {
 		panel.setSize(Constants.NBOFHORIZONTALPIXELS, Constants.NBOFVERTICALPIXELS);
 		panel.setPreferredSize(new Dimension(Constants.NBOFHORIZONTALPIXELS, Constants.NBOFVERTICALPIXELS));
 		JFrame frame = new JFrame();
+//		this.frame = new JFrame();
 		Dimension dim = panel.getSize();
 		int width = dim.width;
 		int height = dim.height;

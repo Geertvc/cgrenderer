@@ -56,7 +56,7 @@
       	</Translate>
       	
       	<Rotate axis="0 1 0" angle="30">
-      		<Shape geometry="teapot1" material="samengesteld1" />
+      		<Shape geometry="teapot1" material="blue" />
       	</Rotate>
       	
       	<Translate vector="-5 1 0">

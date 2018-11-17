@@ -7,7 +7,7 @@
       <Camera position="0 5 -5" direction="0 -1 1" up="0 -2 -1" fovy="60" name="cam1" />
       <Camera position="0 0 5" direction="0 0 -1" up="0 -1 0" fovy="60" name="cam2" />
       <Camera position="0 5 0" direction="0 -1 0" up="0 0 1" fovy="60" name="cam3" />
-      <Camera position="15 15 15" direction="-1 -1 -1" up="0 1 0" fovy="45" name="cam4"/>
+      <Camera position="10 5 10" direction="-1 0 -1" up="0 1 0" fovy="45" name="cam4"/>
       <Camera position="10 4 10" direction="-1 0 -1" up="0 1 0" fovy="45" name="cam5"/>
       <Camera position="-100 100 200" direction="0.5 -0.3 -1" up="0 1 0" fovy="45" name="androidCam"/>  
    </Cameras>   
@@ -22,7 +22,7 @@
    
    <Geometry>
 	<Sphere radius="1" name="sphere" />
-	<!--<Cube size="1" name="cube" />-->
+	<Cube size="1" name="cube" />
 	<!--<IndexedTriangleSet coordinates="-10 0 -10, 10 0 -10, 10 0 10, -10 0 10" normals="1 0 0" textureCoordinates="0 0, 0 1, 1 0, 1 1" coordinateIndices="0, 2, 3, 0, 1, 2" normalIndices="0, 0, 0, 0, 0, 0" textureCoordinateIndices="2, 1, 0, 2, 3, 1" name="plane" />-->
    </Geometry>
    
@@ -38,9 +38,9 @@
       <LinearCombinedMaterial  material1="androidGreen" weight1="0.9" material2="androidPhong" weight2="0.1" name="androidMat" />
    </Materials>
    
-   <Scene camera="androidCam" lights="androidLight" background="0.3 0.3 0.3">
-      <Shape geometry="sphere" material="androidMat" />
+   <Scene camera="cam4" lights="light3" background="0.3 0.3 0.3">
+      <Shape geometry="sphere" material="green" />
       <!--<Shape geometry="plane" material="dif0" />-->
-      <!--<Shape geometry="cube" material="brown" />-->
+      <Shape geometry="cube" material="brown" />
    </Scene>
 </Sdl>

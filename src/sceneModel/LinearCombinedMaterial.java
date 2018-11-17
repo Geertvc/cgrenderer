@@ -2,6 +2,7 @@ package sceneModel;
 
 import abstractModel.Color3f;
 import abstractModel.Point3f;
+import abstractModel.Scene;
 import abstractModel.Vector3f;
 
 /**
@@ -43,9 +44,9 @@ public class LinearCombinedMaterial extends Material{
 	 */
 	@Override
 	public Color3f shade(Vector3f surfaceNormal, Point3f intersectionPoint,
-			PointLight pointLight, Point3f cameraPosition) {
-		Color3f material1Color = material1.shade(surfaceNormal, intersectionPoint, pointLight, cameraPosition);
-		Color3f material2Color = material2.shade(surfaceNormal, intersectionPoint, pointLight, cameraPosition);
+			PointLight pointLight, Point3f cameraPosition, Vector3f viewDirection, Scene scene, int depth) {
+		Color3f material1Color = material1.shade(surfaceNormal, intersectionPoint, pointLight, cameraPosition, viewDirection, scene, depth);
+		Color3f material2Color = material2.shade(surfaceNormal, intersectionPoint, pointLight, cameraPosition, viewDirection, scene, depth);
 		Color3f totalColor = new Color3f();
 		totalColor.scaleSet(weight1, material1Color);
 		totalColor.scaleAdd(weight2, material2Color, totalColor);

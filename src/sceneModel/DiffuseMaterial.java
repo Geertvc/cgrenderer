@@ -2,6 +2,7 @@ package sceneModel;
 
 import abstractModel.Color3f;
 import abstractModel.Point3f;
+import abstractModel.Scene;
 import abstractModel.Vector3f;
 
 /**
@@ -38,7 +39,7 @@ public class DiffuseMaterial extends Material {
 	 */
 	@Override
 	public Color3f shade(Vector3f surfaceNormal, Point3f intersectionPoint,
-			PointLight pointLight, Point3f cameraPosition) {
+			PointLight pointLight, Point3f cameraPosition, Vector3f viewDirection, Scene scene, int depth) {
 		Vector3f lightVector = Vector3f.getNormalizedVectorBetween(pointLight.position, intersectionPoint);
 		float value = pointLight.intensity*Math.max(0, surfaceNormal.dotProduct(lightVector));
 		Color3f shadeColor = new Color3f(

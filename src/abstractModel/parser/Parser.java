@@ -597,6 +597,42 @@ public final class Parser extends DefaultHandler
                 if (echoHandler != null) echoHandler.startLinearCombinedMaterial(material1, weight1, material2, weight2, name);
                 if (    handler != null) handler.startLinearCombinedMaterial(material1, weight1, material2, weight2, name);
             }
+            // GlobalMaterial element
+            else if (qName.equals("GlobalMaterial"))
+            {
+            	// parse ambientColor attribute
+                String ambientColorString = attributes.getValue("ambientColor");
+                if (ambientColorString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"ambientColor\".");
+                Color3f ambientColor = ParserUtils.parseColor3f(ambientColorString);
+                
+                // parse diffuseColor attribute
+                String diffuseColorString = attributes.getValue("diffuseColor");
+                if (diffuseColorString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"diffuseColor\".");
+                Color3f diffuseColor = ParserUtils.parseColor3f(diffuseColorString);
+                
+                // parse spectralColor attribute
+                String spectralColorString = attributes.getValue("spectralColor");
+                if (spectralColorString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"spectralColor\".");
+                Color3f spectralColor = ParserUtils.parseColor3f(spectralColorString);
+                
+                // parse phongExponent attribute
+                String phongExponentString = attributes.getValue("phongExponent");
+                if (phongExponentString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"phongExponent\".");
+                float phongExponent = ParserUtils.parseFloat(phongExponentString);
+                
+                // parse reflectionCoefficient attribute
+                String reflectionCoefficientString = attributes.getValue("reflectionCoefficient");
+                if (reflectionCoefficientString == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"reflectionCoefficient\".");
+                float reflectionCoefficient = ParserUtils.parseFloat(reflectionCoefficientString);
+
+                // parse name attribute
+                String name = attributes.getValue("name");
+                if (name == null) throw new ParseException("Element \"" + qName + "\" requires attribute \"name\".");
+
+                // call handler
+                if (echoHandler != null) echoHandler.startGlobalMaterial(name, ambientColor, diffuseColor, spectralColor, phongExponent, reflectionCoefficient);
+                if (    handler != null) handler.startGlobalMaterial(name, ambientColor, diffuseColor, spectralColor, phongExponent, reflectionCoefficient);
+            }
             // Scene element
             else if (qName.equals("Scene"))
             {
@@ -889,6 +925,13 @@ public final class Parser extends DefaultHandler
                 // call handler
                 if (echoHandler != null) echoHandler.endLinearCombinedMaterial();
                 if (    handler != null) handler.endLinearCombinedMaterial();
+            }
+            // GlobalMaterial element
+            else if (qName.equals("GlobalMaterial"))
+            {
+                // call handler
+                if (echoHandler != null) echoHandler.endGlobalMaterial();
+                if (    handler != null) handler.endGlobalMaterial();
             }
             // Scene element
             else if (qName.equals("Scene"))

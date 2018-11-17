@@ -92,6 +92,9 @@ public interface ParserHandler
 
     public void startLinearCombinedMaterial(String material1Name, float weight1, String material2Name, float weight2, String name) throws Exception;
     public void endLinearCombinedMaterial() throws Exception;
+    
+	public void startGlobalMaterial(String name, Color3f ambientColor, Color3f diffuseColor, Color3f spectralColor,	float phongExponent, float reflectionCoefficient);
+	public void endGlobalMaterial() throws Exception;
 
     public void startScene(String cameraName, String [] lightNames, Color3f background) throws Exception;
     public void endScene() throws Exception;
@@ -107,4 +110,5 @@ public interface ParserHandler
 
     public void startScale(Vector3f scale) throws Exception;
     public void endScale() throws Exception;
+
 }

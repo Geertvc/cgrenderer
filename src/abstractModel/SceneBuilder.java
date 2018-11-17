@@ -449,6 +449,17 @@ public class SceneBuilder implements ParserHandler
      */
     public void endLinearCombinedMaterial() throws Exception {
     }
+    
+	public void startGlobalMaterial(String name, Color3f ambientColor, Color3f diffuseColor, Color3f spectralColor,
+			float phongExponent, float reflectionCoeff) {
+		scene.addGlobalMaterial(name, ambientColor, diffuseColor, spectralColor, phongExponent, reflectionCoeff);
+		
+	}
+
+	public void endGlobalMaterial() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 
     Stack<SceneGraphElement> currentRoot;
     
@@ -625,5 +636,6 @@ public class SceneBuilder implements ParserHandler
     	//Pop de bovenste root uit de rootStack
     	currentRoot.pop();
     }
+
     
 }

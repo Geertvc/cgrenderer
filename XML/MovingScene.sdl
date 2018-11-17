@@ -3,7 +3,7 @@
 
 <Sdl>
    <Cameras>
-      <Camera position="0 0 15" direction="0 0 -1" up="0 1 0" fovy="60" name="cam0" />
+      <Camera position="0 0 15" direction="0 0 -1" up="0 1 0" fovy="30" name="cam0" />
    </Cameras>   
    
    <Lights>
@@ -12,7 +12,8 @@
    
    <Geometry>
 	<!--<Sphere radius="1" name="sphere1" />-->
-	<Sphere radius="1" name="movingSphere" />
+	<Sphere radius="1" name="movingSphere1" />
+	<Sphere radius="1" name="movingSphere2" />
    </Geometry>
    
     <Textures>
@@ -30,6 +31,9 @@
    		<!--<Translate vector="2 0 0">
       		<Shape geometry="sphere1" material="green" />
       	</Translate>-->
-     	<Shape geometry="movingSphere" material="red" />
+     	<Shape geometry="movingSphere1" material="red" />
+     	<Translate vector="-3 -2 0">
+     		<Shape geometry="movingSphere2" material="green" />
+      	</Translate>
    </Scene>
 </Sdl>

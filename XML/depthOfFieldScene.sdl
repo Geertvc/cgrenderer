@@ -3,7 +3,7 @@
 
 <Sdl>
    <Cameras>
-      	<Camera position="0 0 15" direction="0 0 -1" up="-1 0 0" fovy="90" name="cam3" /> 
+      	<Camera position="0 0 15" direction="0 0 -1" up="0 1 0" fovy="40" name="cam3" /> 
    </Cameras>   
    
    <Lights>

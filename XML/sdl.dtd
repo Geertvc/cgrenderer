@@ -144,7 +144,7 @@
 >
 
 
-<!ELEMENT Materials ((DiffuseMaterial|PhongMaterial|LinearCombinedMaterial)*)>
+<!ELEMENT Materials ((DiffuseMaterial|PhongMaterial|LinearCombinedMaterial|GlobalMaterial)*)>
 <!ATTLIST Materials>
 
 <!ELEMENT DiffuseMaterial EMPTY>
@@ -166,6 +166,16 @@
 	weight1						CDATA			"0.5"
 	material2					IDREF			#REQUIRED
 	weight2						CDATA			"0.5"
+	name						ID				#REQUIRED	
+>
+
+<!ELEMENT GlobalMaterial EMPTY>
+<!ATTLIST GlobalMaterial
+	ambientColor				CDATA			"0.5"
+	diffuseColor				CDATA			"0.5"
+	spectralColor				CDATA			"0.5"
+	phongExponent				CDATA			"0.5"
+	reflectionCoefficient		CDATA			"0.5"
 	name						ID				#REQUIRED	
 >
 

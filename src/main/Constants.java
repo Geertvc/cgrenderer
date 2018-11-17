@@ -14,15 +14,22 @@ public class Constants {
 	public static final String FILENAME =
 //			"XML/example.sdl";
 //			"XML/simpleScene.sdl";
-//			"XML/sphereScene.sdl";
-//			"XML/rotateScene.sdl";
-			"XML/teapotWithFloor.sdl";
+			//"XML/sphereScene.sdl";
+			//"XML/rotateScene.sdl";
+//			"XML/teapotWithFloor.sdl";
 //			"XML/shadowScene.sdl";
-//			"XML/testScene.sdl";
+			//"XML/testScene.sdl";
 //			"XML/textureScene.sdl";
-//			"XML/AliasingScene.sdl";
-//			"XML/depthOfFieldScene.sdl";
-//			"XML/MovingScene.sdl";
+			//"XML/AliasingScene.sdl";
+			//"XML/depthOfFieldScene.sdl";
+			//"XML/MovingScene.sdl";
+			//"XML/OneTriangleScene.sdl";
+			//"XML/visibilityScene.sdl";
+			//"XML/perspectiveView.sdl";
+			//"XML/diffuseShadingRasterization.sdl";
+			//"XML/tables.sdl";
+//			"XML/sierpinski.sdl";
+			"XML/globalshadowScene.sdl";
 	/** The name of the file to save the rendered image to. */
 	public static final String SAVE_FILE_NAME = "image.png";
 	/** The number of threads to run at the same time. */
@@ -34,13 +41,13 @@ public class Constants {
 	/** Whether shadows must be rendered or not. */
 	public static final boolean SHADOW = true;
 	/** With how much rays per pixel the shadows must be rendered. */
-	public static final int SOFT_SHADOWS = 16;
+	public static final int SOFT_SHADOWS = 4;
 	
 	/************************
 	 *		ANTIALIASING	*
 	 ************************/
 	/** The total number of rays cast per pixel for AntiAliasing (has to be a square of an integer). */
-	public static final int ANTIALIASING = 64;
+	public static final int ANTIALIASING = 0;
 	/** The number of rays cast per internal row of the pixel. */
 	public static final int ANTIALIASINGPERROW = (int) Math.sqrt(ANTIALIASING);
 	
@@ -85,7 +92,7 @@ public class Constants {
 	/** Whether boundingboxes must be used as acceleration structure. */
 	public static final boolean BOUNDINGBOX = true;
 	/** Whether the used boundingboxes must be hierarchical or not. */
-	public static final boolean HIERARCHICALBOUNDINGBOX = true;
+	public static final boolean HIERARCHICALBOUNDINGBOX = false;
 	/** The depth of the tree with bounding boxes in it. */
 	public static final int LEVELOFHIERARCHICALBOUNDINGBOXTREE = 10;
 	
@@ -101,7 +108,10 @@ public class Constants {
 	/************************
 	 *		OBJ FILES		*
 	 ************************/
-	public static final String PLANE_OBJ = "OBJ/plane.obj";
+	public static final String PLANE_OBJ = 
+			"OBJ/plane.obj";
+			//"OBJ/pyramid.obj";
+//			"OBJ/sierpinski1.obj";
 	public static final String SPHERE_OBJ =
 			//"OBJ/plane.obj";
 			"OBJ/sphere.obj";
@@ -111,11 +121,11 @@ public class Constants {
 			//"OBJ/triceratops.obj";
 			//"OBJ/table.obj";
 			//"OBJ/table-fixed.obj";
-//			"OBJ/tablecloth.obj";
+			//"OBJ/tablecloth.obj";
 			//"OBJ/treeleaves.obj";
 			//"OBJ/treebranches.obj";
-			//"OBJ/android.obj";
-//			"OBJ/brilliant.obj";
+//			"OBJ/android.obj";
+			//"OBJ/brilliant.obj";
 	public static final String CUBE_OBJ = 
 			"OBJ/cube.obj";
 			//"OBJ/treebranches.obj";
@@ -129,5 +139,10 @@ public class Constants {
 	public static final String TABLECLOTH_OBJ = "OBJ/tablecloth.obj";
 	public static final String TRICERATOPS_OBJ = "OBJ/triceratops.obj";
 	public static final String VENUS_OBJ = "OBJ/venus.obj";
+	
+	/************************
+	 *REFLECTION			*
+	 ************************/
+	public static final int REFLECTIONDEPTH = 2;
 	
 }

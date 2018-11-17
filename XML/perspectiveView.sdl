@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE Sdl SYSTEM "sdl.dtd">
+
+<Sdl>
+   <Cameras>
+   		<Camera position="-5 0 0" direction="1 0 0" up="0 1 0" fovy="45" name="cam0" /> 
+      	<Camera position="0 5 0" direction="0 -1 0" up="1 0 0" fovy="45" name="cam1" />
+      	<Camera position="-2.5 0 4.33" direction="2.5 0 -4.33" up="0 1 0" fovy="45" name="cam2" />
+      	<Camera position="5 5 5" direction="-1 -1 -1" up="1 0 0" fovy="30" name="cam3" /> 
+   </Cameras>   
+   
+   <Lights>
+      	<PointLight position="-2.5 0 4.33" intensity="1" color="1 1 1" name="light0" />
+      	<PointLight position="-5 0 0" intensity="1" color="1 1 1" name="light1" />
+      	<PointLight position="15 0 0" intensity="1" color="1 1 1" name="light2" />
+      	<PointLight position="5 10 15" intensity="1" color="1 1 1" name="light3" />
+   </Lights>
+   
+   <Geometry>
+   		<!--<Plane size="1" name="plane" />-->
+		<!--<IndexedTriangleSet coordinates="-1 -1 0, 1 -1 0, 1 1 0, -1 1 0" normals="0 0 1" textureCoordinates="0 0, 0 1, 1 0, 1 1" coordinateIndices="0, 2, 3, 0, 1, 2" normalIndices="0, 0, 0, 0, 0, 0" textureCoordinateIndices="2, 1, 0, 2, 3, 1" name="plane" />-->
+		<Cube size="1" name="cube1" />
+		<!--<Sphere radius="1" name="sphere" />-->
+		<!--<Teapot size="1" name="teapot1" />-->
+		<!--<Torus innerRadius="1" outerRadius="3" name="teapot1" />-->
+		
+		<!--<IndexedTriangleSet coordinates="1 1 0, 0 1 0, 1 -1 0" normals="0 0 1" textureCoordinates="0 0, 0 1, 1 0" coordinateIndices="0, 1, 2" normalIndices="0, 0, 0" textureCoordinateIndices="2, 1, 0" name="triangle1" />-->
+		<!--<IndexedTriangleSet coordinates="0 1 0, 0 -1 0, 1 -1 0" normals="0 0 1" textureCoordinates="0 0, 0 1, 1 0" coordinateIndices="0, 1, 2" normalIndices="0, 0, 0" textureCoordinateIndices="2, 1, 0" name="triangle2" />-->
+		
+   </Geometry>
+   
+   <Textures>
+   		<Texture src="fiber.jpg" name="tex" />
+   		<Texture src="back.jpg" name="worldMap" />
+   </Textures>
+   
+   <Materials>
+      	<DiffuseMaterial color="1 0.75 1" name="dif0" />      
+      	<DiffuseMaterial color="1 0 0" name="red" />
+      	<DiffuseMaterial color="1 1 0" name="yellow" />
+      	<DiffuseMaterial color="0 0.6 0.6" name="darkCyan" />     
+   </Materials>
+   
+   <Scene camera="cam3" lights="light3" background="0.3 0.3 0.3">
+   <!-- -->
+   		<!--<Shape geometry="plane" material="dif0" />-->
+   		<Shape geometry="cube1" material="darkCyan" />
+   		<!--<Shape geometry="sphere" material="yellow" />-->
+   		<!--<Shape geometry="teapot1" material="red" />-->
+   		
+   		<!--<Shape geometry="triangle1" material="yellow" />-->
+   		<!--<Shape geometry="triangle2" material="red" />-->
+   </Scene>
+</Sdl>

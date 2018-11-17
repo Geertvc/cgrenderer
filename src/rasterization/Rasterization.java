@@ -82,7 +82,7 @@ public class Rasterization {
 							for (PointLight pointLight : pointLights) {
 
 								Vector3f surfaceNormal = Triangle.getInterpolatedNormalizedNormal(a, b, c, intersectionPoint);
-								pixelColor.add(material.shade(surfaceNormal, Triangle.getPointAt(aOriginalCoord, bOriginalCoord, cOriginalCoord, beta, gamma), pointLight, camera.position));
+								pixelColor.add(material.shade(surfaceNormal, Triangle.getPointAt(aOriginalCoord, bOriginalCoord, cOriginalCoord, beta, gamma), pointLight, camera.position, null, null, 0));
 							}
 							
 							zBuffer.setEntryAt(x, y, pixelColor, zDepth);
@@ -101,9 +101,9 @@ public class Rasterization {
 			float gamma, Vertex a, Vertex b, Vertex c, Point3f aOriginalCoord, Point3f bOriginalCoord, Point3f cOriginalCoord, Material material, PointLight pointLight,
 			Point3f position) {
 //		Point3f intersectionPoint = getTrianglePointAt(alpha, beta, gamma, a, b, c);
-		Color3f aColor = material.shade(a.normal, aOriginalCoord, pointLight, position);
-		Color3f bColor = material.shade(b.normal, bOriginalCoord, pointLight, position);
-		Color3f cColor = material.shade(c.normal, cOriginalCoord, pointLight, position);
+		Color3f aColor = material.shade(a.normal, aOriginalCoord, pointLight, position, null, null, 0);
+		Color3f bColor = material.shade(b.normal, bOriginalCoord, pointLight, position, null, null, 0);
+		Color3f cColor = material.shade(c.normal, cOriginalCoord, pointLight, position, null, null, 0);
 		return new Color3f(
 				alpha*aColor.x + beta*bColor.x + gamma*cColor.x,
 				alpha*aColor.y + beta*bColor.y + gamma*cColor.y,
@@ -333,9 +333,9 @@ public class Rasterization {
 				Color3f bColor = new Color3f();
 				Color3f cColor = new Color3f();
 				for (PointLight pointLight : pointLights) {
-					aColor.add(material.shade(a.normal, a.coord, pointLight, camera.position));
-					bColor.add(material.shade(b.normal, b.coord, pointLight, camera.position));
-					cColor.add(material.shade(c.normal, c.coord, pointLight, camera.position));
+					aColor.add(material.shade(a.normal, a.coord, pointLight, camera.position, null, null, 0));
+					bColor.add(material.shade(b.normal, b.coord, pointLight, camera.position, null, null, 0));
+					cColor.add(material.shade(c.normal, c.coord, pointLight, camera.position, null, null, 0));
 				}
 				transformTriangle(transformMatrix, a, b, c);
 				rasterizeTriangle(a, b, c, aOriginalCoord, bOriginalCoord, cOriginalCoord, aColor, bColor, cColor, material, pointLights, camera);

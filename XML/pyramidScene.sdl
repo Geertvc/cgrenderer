@@ -4,14 +4,14 @@
 <Sdl>
    <Cameras>
       <Camera position="20 20 0" direction="-1 -1 0" up="0 0 1" fovy="20" name="cam3" />
-      <Camera position="5 5 5" direction="-1 -1 -1" up="0 1 0" fovy="45" name="cam4"/>
+      <Camera position="15 15 15" direction="-1 -1 -1" up="0 1 0" fovy="45" name="cam4"/>
       <Camera position="0 15 0" direction="0 -1 0" up="0 0 1" fovy="45" name="perpCam"/>  
    </Cameras>   
    
    <Lights>
       <PointLight position="15 15 15" intensity="1" color="1 1 1" name="light4" />
       <PointLight position="5 5 0" intensity="1" color="1 1 1" name="light3" />
-      <PointLight position="0 10 0" intensity="1" color="1 1 1" name="perpLight" />
+      <PointLight position="0 25 0" intensity="1" color="1 1 1" name="perpLight" />
    </Lights>
    
    <Geometry>

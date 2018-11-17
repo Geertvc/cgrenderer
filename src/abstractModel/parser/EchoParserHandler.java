@@ -516,6 +516,32 @@ public class EchoParserHandler implements ParserHandler
         System.out.println("</LinearCombinedMaterial>");
         indent--;
     }
+    
+	@Override
+	public void startGlobalMaterial(String name, Color3f ambientColor, Color3f diffuseColor, Color3f spectralColor,
+			float phongExponent, float reflectionCoeff) {
+		indent++;
+        for (int i = 0; i < indent; i++) System.out.print(indentString);
+        System.out.println(
+            "<GlobalMaterial"
+            + " ambientColor=\"" + ParserUtils.formatTuple3f(ambientColor) + "\""
+            + " diffuseColor=\"" + ParserUtils.formatTuple3f(diffuseColor) + "\""
+            + " spectralColor=\"" + ParserUtils.formatTuple3f(spectralColor) + "\""
+            + " phongExponent=\"" + phongExponent + "\""
+            + " reflectionCoeff=\"" + reflectionCoeff + "\""
+            + " name=\"" + name + "\""
+            + ">"
+        );
+	}
+
+	@Override
+	public void endGlobalMaterial() throws Exception {
+		for (int i = 0; i < indent; i++) System.out.print(indentString);
+        System.out.println("</GlobalMaterial>");
+        indent--;
+	}
+
+
 
     public void startScene(String cameraName, String [] lightNames, Color3f background) throws Exception
     {
