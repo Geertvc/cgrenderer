@@ -14,8 +14,8 @@ public class Constants {
 	public static final String FILENAME =
 //			"XML/example.sdl";
 //			"XML/simpleScene.sdl";
-			//"XML/sphereScene.sdl";
-			//"XML/rotateScene.sdl";
+//			"XML/sphereScene.sdl";
+//			"XML/rotateScene.sdl";
 //			"XML/teapotWithFloor.sdl";
 //			"XML/shadowScene.sdl";
 			//"XML/testScene.sdl";
@@ -41,7 +41,7 @@ public class Constants {
 	/** Whether shadows must be rendered or not. */
 	public static final boolean SHADOW = true;
 	/** With how much rays per pixel the shadows must be rendered. */
-	public static final int SOFT_SHADOWS = 4;
+	public static final int SOFT_SHADOWS = 1;
 	
 	/************************
 	 *		ANTIALIASING	*
@@ -115,6 +115,7 @@ public class Constants {
 	public static final String SPHERE_OBJ =
 			//"OBJ/plane.obj";
 			"OBJ/sphere.obj";
+//			"OBJ/cube.obj";
 			//"OBJ/teapot.obj";
 			//"OBJ/bunny.obj";
 			//"OBJ/venus.obj";
@@ -126,6 +127,7 @@ public class Constants {
 			//"OBJ/treebranches.obj";
 //			"OBJ/android.obj";
 			//"OBJ/brilliant.obj";
+//			"OBJ/testOutput.obj";
 	public static final String CUBE_OBJ = 
 			"OBJ/cube.obj";
 			//"OBJ/treebranches.obj";

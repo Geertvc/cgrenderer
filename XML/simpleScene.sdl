@@ -6,7 +6,7 @@
    		<Camera position="-5 0 0" direction="1 0 0" up="0 1 0" fovy="45" name="cam0" /> 
       	<Camera position="0 5 0" direction="0 -1 0" up="1 0 0" fovy="45" name="cam1" />
       	<Camera position="-2.5 0 4.33" direction="2.5 0 -4.33" up="0 1 0" fovy="45" name="cam2" />
-      	<Camera position="0 15 15" direction="0 -1 -1" up="0 1 0" fovy="30" name="cam3" /> 
+      	<Camera position="-5 10 10" direction="0.3 -0.6 -0.6" up="0 1 0" fovy="30" name="cam3" /> 
    </Cameras>   
    
    <Lights>
@@ -35,7 +35,7 @@
       	<DiffuseMaterial color="1 1 0" name="yellow" />      
    </Materials>
    
-   <Scene camera="cam3" lights="light3" background="0.3 0.3 0.3">
+   <Scene camera="cam3" lights="light3,light2" background="0.3 0.3 0.3">
    <!-- -->
    		<!--<Shape geometry="plane" material="dif0" />-->
    		<!--<Shape geometry="cube1" material="dif0" />-->

@@ -144,8 +144,19 @@ public class Triangle {
 	public static Vector3f getInterpolatedNormalizedNormal(Vertex a, Vertex b, Vertex c, Point3f intersectionPoint){
 		Vector3f bary = Triangle.getBarycentricCoordinates3DCalculatedWithAreas(a, b, c, intersectionPoint);
 		
-		if(!(Math.abs(bary.x - (1-bary.y-bary.z))<0.0001))
-			System.err.println("intersectionPoint not in triangle!!");
+//		if(0 > bary.x || bary.x > 1) {
+//			System.err.println("getInterpolatedNormalizedNormal x - intersectionPoint not in triangle!! " + Math.abs(bary.x - (1-bary.y-bary.z)));
+//		}
+//		if(0 > bary.y || bary.y > 1) {
+//			System.err.println("getInterpolatedNormalizedNormal y - intersectionPoint not in triangle!! " + Math.abs(bary.x - (1-bary.y-bary.z)));
+//		}
+//		if(0 > bary.z || bary.z > 1) {
+//			System.err.println("getInterpolatedNormalizedNormal z - intersectionPoint not in triangle!! " + Math.abs(bary.x - (1-bary.y-bary.z)));
+//		}
+		if(!(Math.abs(bary.x - (1-bary.y-bary.z))<0.001)) {
+			System.err.println("getInterpolatedNormalizedNormal - intersectionPoint not in triangle!! " + Math.abs(bary.x - (1-bary.y-bary.z)));
+//			getBarycentricCoordinates3DCalculatedWithAreas(a, b, c, intersectionPoint);
+		}
 		
 		Vector3f normalA = new Vector3f(a.normal);
 		Vector3f normalB = new Vector3f(b.normal);
@@ -320,8 +331,8 @@ public class Triangle {
 		if(aTex == null || bTex == null || cTex == null)
 			throw new IllegalArgumentException("There is no textureCoordinate available.");
 		Vector3f bary = Triangle.getBarycentricCoordinates3DCalculatedWithAreas(a, b, c, intersectionPoint);
-		if(!(Math.abs(bary.x - (1-bary.y-bary.z))<0.0001))
-			System.err.println("intersectionPoint not in triangle!!");
+		if(!(Math.abs(bary.x - (1-bary.y-bary.z))<0.0000001))
+			System.err.println("getInterpolatedTextureCoordinates - intersectionPoint not in triangle!!");
 		float u = aTex.x + (bary.y*(bTex.x-aTex.x)) + (bary.z*(cTex.x-aTex.x));
 		float v = aTex.y + (bary.y*(bTex.y-aTex.y)) + (bary.z*(cTex.y-aTex.y));
 		return new TexCoord2f(u, v);
